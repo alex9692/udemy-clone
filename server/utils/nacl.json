@@ -1,0 +1,46 @@
+[
+  {
+    "group": "admin",
+    "permissions": [
+      {
+        "resource": "*",
+        "methods": "*",
+        "action": "allow"
+      }
+    ]
+  },
+  {
+    "group": "guest",
+    "permissions": [
+      {
+        "resource": "blogs/*",
+        "methods": ["POST", "PATCH", "DELETE"],
+        "action": "deny",
+        "subRoutes": [
+          {
+            "resource": "myblogs",
+            "methods": ["GET"],
+            "action": "deny"
+          }
+        ]
+      },
+      {
+        "resource": "product-hero/*",
+        "methods": ["GET", "PATCH"],
+        "action": "deny"
+      },
+      {
+        "resource": "products/*",
+        "methods": ["POST", "PATCH"],
+        "action": "deny",
+        "subRoutes": [
+          {
+            "resource": "myproducts",
+            "methods": ["GET"],
+            "action": "deny"
+          }
+        ]
+      }
+    ]
+  }
+]
