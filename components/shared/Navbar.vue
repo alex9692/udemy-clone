@@ -1,94 +1,121 @@
 <template>
-  <nav class="custom-navbar has-background-black has-text-light">
-    <div class="columns is-mobile">
-      <div class="column  left">
-        <div class="navbar-brand">
-          <nuxt-link class="navbar-item" to="/">
-            <h1 class="is-size-3 has-text-weight-bold has-text-light">
-              Promo-Yourself
-            </h1>
-          </nuxt-link>
+  <client-only>
+    <nav class="custom-navbar has-background-black has-text-light">
+      <div class="columns is-mobile">
+        <div class="column left">
+          <div class="navbar-brand">
+            <nuxt-link class="navbar-item" to="/">
+              <h1 class="is-size-3 has-text-weight-bold has-text-light has-text-grey-light">
+                Udemy-Clone
+              </h1>
+            </nuxt-link>
+          </div>
         </div>
-      </div>
-      <div class="column desktop  center">
-        <div class="navbar-start">
-          <nuxt-link to="/" class="navbar-item">
-            Home
-          </nuxt-link>
-          <nuxt-link to="#" class="navbar-item">
-            Courses
-          </nuxt-link>
-          <nuxt-link to="#" class="navbar-item">
-            Blogs
-          </nuxt-link>
-          <nuxt-link to="#" class="navbar-item">
-            About
-          </nuxt-link>
-          <nuxt-link to="#" class="navbar-item">
-            Cv
-          </nuxt-link>
+        <div class="column desktop left">
+          <div class="navbar-start m-r-none">
+            <nuxt-link to="/" class="navbar-item">
+              Home
+            </nuxt-link>
+            <nuxt-link to="#" class="navbar-item">
+              Courses
+            </nuxt-link>
+            <nuxt-link to="#" class="navbar-item">
+              Blogs
+            </nuxt-link>
+            <nuxt-link to="#" class="navbar-item">
+              About
+            </nuxt-link>
+            <nuxt-link to="#" class="navbar-item">
+              Cv
+            </nuxt-link>
+          </div>
         </div>
-      </div>
-      <div class="column right">
-        <div class="navbar-end">
-          <div class="navbar-item desktop">
-            <div class="buttons center">
+        <div class="column right">
+          <div class="navbar-end">
+            <div class="desktop center side-nav" style="width: 100%;">
               <template v-if="isAuth">
-                <figure class="image center is-48x48 avatar m-r-sm m-b-sm">
+                <figure class="image center avatar m-r-sm m-b-sm">
                   <!-- <img
                     src="https://png.pngtree.com/png-clipart/20190516/original/pngtree-users-vector-icon-png-image_3725294.jpg"
                   /> -->
                   <img
-                    class="is-rounded"
+                    class="is-rounded has-background-grey"
                     :src="user.avatar"
                     alt="user-image"
-                    style="background: #fff"
+
                   />
                 </figure>
-                <div class="m-r-sm m-b-sm">Welcome {{ user.username }}!</div>
-                <button
-                  v-if="true"
-                  class="button is-link is-outlined"
+                <div
+                  class="m-r-sm navbar-item "
+                  style="width: max-content;border:none"
+                >
+                  <p class="subtitle is-size-6 has-text-grey">
+                    Welcome {{ user.username }}!
+                  </p>
+                </div>
+                <nuxt-link
+                  to="/instructor"
+                  v-if="isAdmin"
+                  class="navbar-item has-text-primary"
                   @click="() => {}"
                 >
                   Instructor
-                </button>
-                <button class="button is-primary" @click="logout">
+                </nuxt-link>
+                <div
+                  class="navbar-item has-text-link"
+                  id="link"
+                  @click="logout"
+                  style="cursor:pointer;"
+                >
                   Logout
-                </button>
+                </div>
               </template>
               <template v-else>
-                <nuxt-link to="/register" class="button is-primary">
+                <nuxt-link to="/register" class="navbar-item has-text-primary">
                   Sign up
                 </nuxt-link>
-                <nuxt-link to="/login" class="button is-light">
+                <nuxt-link
+                  to="/login"
+                  class="navbar-item has-text-warning"
+                  id="warning"
+                >
                   Log in
                 </nuxt-link>
               </template>
             </div>
-          </div>
-          <div
-            @click="initShowSideBar"
-            class="navbar-item center mobile"
-            style="height: 100%;padding:1rem;"
-          >
-            <span class="burger icon has-text-grey" style="cursor: pointer;">
-              <i class="fas fa-bars"></i>
-            </span>
+            <div
+              @click="initShowSideBar"
+              class="navbar-item center mobile custom-burger"
+              :class="[{ 'active-1': show }, { 'active-2': show }]"
+              id="sb-link"
+            >
+              <span class="icon has-text-grey">
+                <i class="fas fa-bars"></i>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </client-only>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
+  props: {
+    show: {
+      type: Boolean,
+      required: true
+    }
+  },
   computed: {
     ...mapState({
       isAuth: state => state.auth.isAuth,
       user: state => state.auth.user
+    }),
+    ...mapGetters({
+      isAdmin: "auth/isAdmin"
     })
   },
   methods: {
@@ -104,11 +131,23 @@ export default {
 
 <style lang="scss" scoped>
 $primary: #00d1b2;
-$nav: #5b89d4;
+$nav: #496fac;
+$logout: #b63174;
+$login: #ffdd57;
+.text {
+  border: none;
+}
+.image {
+  width: 48px;
+}
+.side-nav {
+  flex-wrap: nowrap;
+}
 .custom-navbar {
   position: fixed;
   top: 0;
   left: 0;
+  opacity: 0.97;
   width: 100%;
   height: 5rem;
   z-index: 25;
@@ -116,9 +155,13 @@ $nav: #5b89d4;
 .navbar-brand {
   padding-right: 30px;
 }
-.navbar-start .navbar-item {
+.navbar-start .navbar-item,
+.navbar-end .navbar-item {
   background-color: transparent;
   color: inherit;
+}
+.navbar-end .navbar-item {
+  height: 100%;
 }
 .navbar-start .navbar-item:hover,
 .navbar-start .navbar-item:active,
@@ -126,11 +169,46 @@ $nav: #5b89d4;
   color: $nav;
   border-bottom: 3px solid $nav;
 }
+.navbar-end .navbar-item:hover,
+.navbar-end .navbar-item:active,
+.navbar-end .navbar-item.nuxt-link-exact-active {
+  color: $primary;
+  border-bottom: 3px solid $primary;
+}
+.navbar-end .navbar-item#sb-link:hover,
+.navbar-end .navbar-item#sb-link:active,
+.navbar-end .navbar-item#sb-link.active-1,
+.navbar-end .navbar-item#sb-link.nuxt-link-exact-active {
+  color: $nav !important;
+  border-bottom: 3px solid $nav;
+}
+.navbar-end .navbar-item#sb-link:hover span,
+.navbar-end .navbar-item#sb-link:active span,
+.navbar-end .navbar-item#sb-link.active-2 span,
+.navbar-end .navbar-item#sb-link.nuxt-link-exact-active span {
+  color: $nav !important;
+}
+.navbar-end .navbar-item#warning:hover,
+.navbar-end .navbar-item#warning:active,
+.navbar-end .navbar-item#warning.nuxt-link-exact-active {
+  color: $login;
+  border-bottom: 3px solid $login;
+}
+.navbar-end .navbar-item#link {
+  color: $logout !important;
+}
+.navbar-end .navbar-item#link:hover,
+.navbar-end .navbar-item#link:active,
+.navbar-end .navbar-item#link.nuxt-link-exact-active {
+  color: $logout;
+  border-bottom: 3px solid $logout;
+}
+
 .navbar-item img {
   max-height: 3.5rem;
 }
 .avatar {
-  border: 1px solid $primary;
+  border: 1px solid #7a7a7a;
   border-radius: 50%;
 }
 .columns {
@@ -162,9 +240,10 @@ $nav: #5b89d4;
 .right {
   justify-content: flex-end;
 }
-
-.burger:hover {
-  color: $nav !important;
+.custom-burger {
+  height: 100%;
+  padding: 1rem;
+  cursor: pointer;
 }
 
 @media (max-width: 1060px) {
@@ -178,77 +257,3 @@ $nav: #5b89d4;
   }
 }
 </style>
-<div class="navbar-brand">
-      <nuxt-link class="navbar-item" to="/">
-        <h1 class="is-size-3 has-text-weight-bold">Promo-Yourself</h1>
-      </nuxt-link>
-      <a @click="showSidebar = !showSidebar" class="navbar-burger burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </a>
-    </div>
-
-    <div
-      id="navbarBasicExample"
-      class="navbar-menu"
-      :class="{ 'is-active': showSidebar }"
-    >
-      <div class="navbar-start">
-        <nuxt-link to="/" class="navbar-item">
-          Home
-        </nuxt-link>
-        <nuxt-link to="#" class="navbar-item">
-          Courses
-        </nuxt-link>
-        <nuxt-link to="#" class="navbar-item">
-          Blogs
-        </nuxt-link>
-        <nuxt-link to="#" class="navbar-item">
-          About
-        </nuxt-link>
-        <nuxt-link to="#" class="navbar-item">
-          Cv
-        </nuxt-link>
-      </div>
-
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons center">
-            <div v-if="false"> //template
-              <figure class="image center is-48x48 avatar m-r-sm m-b-sm">
-                // not in use <img
-                  src="https://png.pngtree.com/png-clipart/20190516/original/pngtree-users-vector-icon-png-image_3725294.jpg"
-                />
-                <img
-                  class="is-rounded"
-                  src="https://freesvg.org/img/1534819034.png"
-                  alt="user-image"
-                />
-              </figure>
-              <div class="m-r-sm m-b-sm">
-                Welcome User!
-              </div>
-              <button
-                v-if="true"
-                class="button is-link is-outlined"
-                @click="() => {}"
-              >
-                Instructor
-              </button>
-              <a class="button is-primary" @click="() => {}">
-                Logout
-              </a>
-            </div>
-            <div v-else> //template
-              <nuxt-link to="/register" class="button is-primary">
-                Sign up
-              </nuxt-link>
-              <nuxt-link to="/login" class="button is-light">
-                Log in
-              </nuxt-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>

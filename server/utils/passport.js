@@ -4,11 +4,13 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 const User = require("../models/user");
 
-console.log(process.env.DBURI_DEVELOPMENT)
+var cookieExtractor = function(req) {
+  return req.user_cookies;
+};
 passport.use(
   new JwtStrategy(
     {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: cookieExtractor,
       secretOrKey: process.env.JWT_SECRET
     },
     async function(jwt_payload, done) {

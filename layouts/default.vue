@@ -1,20 +1,23 @@
 <template>
   <div>
-    <Header @show-sidebar="toggleSidebar"></Header>
+    <Header @show-sidebar="toggleSidebar" :show="showSidebar"></Header>
     <Sidebar @close-sidebar="showSidebar = false" :show="showSidebar"></Sidebar>
     <main @click="showSidebar = false" class="main-content">
       <nuxt />
     </main>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Header from "~/components/shared/Navbar";
 import Sidebar from "~/components/shared/Sidebar";
+import Footer from "~/components/shared/Footer";
 
 export default {
   components: {
     Header,
+    Footer,
     Sidebar
   },
   data() {
@@ -28,13 +31,12 @@ export default {
       this.showSidebar = !this.showSidebar;
     },
     onResize(event) {
-      this.width= event.currentTarget.innerWidth;
-
+      this.width = event.currentTarget.innerWidth;
     }
   },
   watch: {
     width(val) {
-      if(this.width > 1060) {
+      if (this.width > 1060) {
         this.showSidebar = false;
       }
     }
@@ -43,8 +45,8 @@ export default {
     window.addEventListener("resize", this.onResize);
   },
   beforeDestroy() {
-  window.removeEventListener('resize', this.onResize)
-}
+    window.removeEventListener("resize", this.onResize);
+  }
 };
 </script>
 

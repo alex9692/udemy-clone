@@ -12,7 +12,7 @@
               <small>@{{ user.username }}</small>
               <small>31m</small>
               <br />
-              Welcome to Promo-yourself!
+              Welcome to Udemy-Clone!
             </p>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .media {
   padding: 1rem 2rem;
 }
@@ -144,7 +144,7 @@ export default {
   cursor: pointer;
   /* border-bottom: 2px solid #dbdbdb; */
 }
-@media (min-width: 600px) {
+@media (min-width: 700px) {
   .sidebar {
     width: 50vw;
   }

@@ -16,6 +16,8 @@
                 <div class="field">
                   <div class="control">
                     <input
+                      :class="{ 'is-danger': $v.email.$error }"
+                      ref="focusEmail"
                       class="input is-large"
                       type="email"
                       placeholder="Your Email"
@@ -37,6 +39,7 @@
                 <div class="field">
                   <div class="control">
                     <input
+                      :class="{ 'is-danger': $v.password.$error }"
                       class="input is-large"
                       type="password"
                       placeholder="Your Password"
@@ -79,11 +82,15 @@
 <script>
 import { required, email, minLength } from "vuelidate/lib/validators";
 export default {
+  middleware: "isUserLoggedIn",
   data() {
     return {
       email: "",
       password: ""
     };
+  },
+  mounted() {
+    this.$refs.focusEmail.focus();
   },
   validations: {
     email: {
@@ -96,11 +103,11 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      // this.$store.dispatch("auth/LOGIN_USER", {
-      //   email: this.email,
-      //   password: this.password
-      // });
+    async onSubmit() {
+      await this.$store.dispatch("auth/LOGIN_USER", {
+        email: this.email,
+        password: this.password
+      });
     }
   }
 };

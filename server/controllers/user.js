@@ -44,7 +44,7 @@ exports.login = async (req, res, next) => {
     }
     const user = await User.findOne({ email }).select("+password");
     if (!user || !(await user.verifyPassword(user.password, password))) {
-      return next(errorHandler("Invalid email or password", "fail", 401));
+      return next(errorHandler("Invalid email or password", "fail", 400));
     }
     const token = jwt.sign(
       {
@@ -55,6 +55,14 @@ exports.login = async (req, res, next) => {
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
     user.password = undefined;
+    const cookieOptions = {
+      expires: new Date(
+        Date.now() + process.env.COOKIE_EXPIRES_IN * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+      secure: req.secure || req.headers["x-forwarded-proto"] === "https"
+    };
+    res.cookie("jwt", token, cookieOptions);
     res.status(200).json({
       status: "success",
       data: {
@@ -67,6 +75,14 @@ exports.login = async (req, res, next) => {
   }
 };
 
+exports.logout = (req, res, next) => {
+  res.clearCookie("jwt");
+  res.status(200).json({
+    status: "success",
+    message: "logout successfull"
+  });
+};
+
 exports.getMe = async (req, res, next) => {
   try {
     const { id } = req.user;
@@ -75,14 +91,44 @@ exports.getMe = async (req, res, next) => {
     if (!user) {
       return next(errorHandler("User not found", "fail", 404));
     }
+    // let token;
+    // if(req.user_cookies) {
+    const token = req.user_cookies;
+    // } else {
 
+    // token = jwt.sign(
+    //   {
+    //     id: user.id,
+    //     email: user.email
+    //   },
+    //   process.env.JWT_SECRET,
+    //   { expiresIn: process.env.JWT_EXPIRES_IN }
+    // );
+    // const cookieOptions = {
+    //   expires: new Date(
+    //     Date.now() + process.env.COOKIE_EXPIRES_IN * 60 * 60 * 1000
+    //   ),
+    //   httpOnly: true,
+    //   secure: req.secure || req.headers["x-forwarded-proto"] === "https"
+    // };
+    // res.cookie("jwt", token, cookieOptions);
     res.status(200).json({
       status: "success",
       data: {
+        token,
         user
       }
     });
   } catch (error) {
     return next(errorHandler(error.message));
+  }
+};
+
+exports.isLoggedIn = (req, res, next) => {
+  if (req && req.headers.cookie) {
+    req.user_cookies = req.headers.cookie.split("=")[1];
+    next();
+  } else {
+    res.send();
   }
 };

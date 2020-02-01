@@ -68,7 +68,7 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .title {
   font-size: 2rem;
 }
@@ -170,7 +170,7 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 540px) {
     .title {
     font-size: 1.5rem;
   }

@@ -75,7 +75,6 @@ exports.getBlogById = async (req, res, next) => {
 exports.getBlogBySlug = async (req, res, next) => {
   try {
     const { slug } = req.params;
-    console.log(slug);
     const blog = await Blog.findOne({ slug }).populate({
       path: "user",
       select: "-_id -products -email -role"

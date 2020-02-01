@@ -21,6 +21,7 @@
                   <div class="control">
                     <input
                       class="input is-large"
+                      :class="{ 'is-danger': $v.username.$error }"
                       type="text"
                       placeholder="Username"
                       v-model="username"
@@ -42,6 +43,7 @@
                   <div class="control">
                     <input
                       class="input is-large"
+                      :class="{ 'is-danger': $v.name.$error }"
                       type="text"
                       placeholder="Name"
                       v-model="name"
@@ -63,6 +65,7 @@
                   <div class="control">
                     <input
                       class="input is-large"
+                      :class="{ 'is-danger': $v.email.$error }"
                       type="email"
                       placeholder="Your Email"
                       v-model="email"
@@ -82,21 +85,30 @@
                   <div class="control">
                     <input
                       class="input is-large"
+                      :class="{ 'is-danger': $v.avatar.$error }"
                       type="text"
                       placeholder="Avatar"
                       autocomplete=""
                       v-model="avatar"
+                      @blur="$v.avatar.$touch()"
                     />
-                    <!-- <div class="form-error">
-                    <span class="help is-danger">Url format is not valid!</span>
-                    <span class="help is-danger">Selected file type is not valid!</span>
-                  </div> -->
+                    <div v-if="$v.avatar.$error" class="form-error">
+                      <span v-if="!$v.avatar.url" class="help is-danger"
+                        >Url format is not valid!</span
+                      >
+                      <span
+                        v-if="!$v.avatar.supportedFIleTypes"
+                        class="help is-danger"
+                        >Selected file type is not valid!</span
+                      >
+                    </div>
                   </div>
                 </div>
                 <div class="field">
                   <div class="control">
                     <input
                       class="input is-large"
+                      :class="{ 'is-danger': $v.password.$error }"
                       type="password"
                       placeholder="Your Password"
                       autocomplete="new-password"
@@ -118,6 +130,7 @@
                   <div class="control">
                     <input
                       class="input is-large"
+                      :class="{ 'is-danger': $v.confirmPassword.$error }"
                       type="password"
                       placeholder="Password Confirmation"
                       autocomplete="off"
@@ -126,7 +139,15 @@
                     />
                     <div v-if="$v.confirmPassword.$error" class="form-error">
                       <span
-                        v-if="!$v.confirmPassword.matchPassword"
+                        v-if="!$v.confirmPassword.required"
+                        class="help is-danger"
+                        >Password confirmation is required</span
+                      >
+                      <span
+                        v-if="
+                          $v.confirmPassword.required &&
+                            !$v.confirmPassword.matchPassword
+                        "
                         class="help is-danger"
                         >Password confirmation should be the same as
                         password</span
@@ -156,8 +177,16 @@
 </template>
 
 <script>
-import { email, required, minLength, sameAs } from "vuelidate/lib/validators";
+import {
+  email,
+  required,
+  minLength,
+  sameAs,
+  url
+} from "vuelidate/lib/validators";
+import { supportedFIleTypes } from "~/helpers/validator";
 export default {
+  middleware: "isUserLoggedIn",
   data() {
     return {
       username: "",
@@ -188,6 +217,10 @@ export default {
     name: {
       required,
       minLength: minLength(4)
+    },
+    avatar: {
+      url,
+      supportedFIleTypes
     }
   },
   methods: {

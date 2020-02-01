@@ -29,7 +29,11 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: "~/plugins/filters.js" },{ src: "~/plugins/vuelidate.js" }],
+  plugins: [
+    { src: "~/plugins/filters.js" },
+    { src: "~/plugins/vuelidate.js" }
+    // { src: "~/plugins/fontawesome.js" }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -44,6 +48,7 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
     // Doc: https://github.com/nuxt-community/dotenv-module
+    "@nuxtjs/toast",
     "@nuxtjs/dotenv"
   ],
   /*
