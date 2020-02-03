@@ -14,8 +14,8 @@ module.exports = {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-    script: [{ src: "https://use.fontawesome.com/releases/v5.3.1/js/all.js" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    // script: [{ src: "https://use.fontawesome.com/releases/v5.3.1/js/all.js" }]
   },
   serverMiddleware: ["~/server/routes/index.js"],
   /*
@@ -25,13 +25,17 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ["@/assets/scss/main.scss"],
+  css: [
+    "@/assets/scss/main.scss"
+    // "@fortawesome/fontawesome-svg-core/styles.css"
+  ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
     { src: "~/plugins/filters.js" },
-    { src: "~/plugins/vuelidate.js" }
+    { src: "~/plugins/vuelidate.js" },
+    { src: "~/plugins/bus.js" }
     // { src: "~/plugins/fontawesome.js" }
   ],
   /*
@@ -43,13 +47,28 @@ module.exports = {
    */
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    "@nuxtjs/bulma",
+    // "@nuxtjs/bulma",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
     // Doc: https://github.com/nuxt-community/dotenv-module
     "@nuxtjs/toast",
-    "@nuxtjs/dotenv"
+    "@nuxtjs/dotenv",
+    [
+      "nuxt-fontawesome",
+      {
+        imports: [
+          {
+            set: "@fortawesome/free-solid-svg-icons",
+            icons: ["fas"]
+          },
+          {
+            set: "@fortawesome/free-brands-svg-icons",
+            icons: ["fab"]
+          }
+        ]
+      }
+    ]
   ],
   /*
    ** Axios module configuration

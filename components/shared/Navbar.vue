@@ -5,7 +5,9 @@
         <div class="column left">
           <div class="navbar-brand">
             <nuxt-link class="navbar-item" to="/">
-              <h1 class="is-size-3 has-text-weight-bold has-text-light has-text-grey-light">
+              <h1
+                class="is-size-3 has-text-weight-bold has-text-light has-text-grey-light"
+              >
                 Udemy-Clone
               </h1>
             </nuxt-link>
@@ -34,7 +36,7 @@
           <div class="navbar-end">
             <div class="desktop center side-nav" style="width: 100%;">
               <template v-if="isAuth">
-                <figure class="image center avatar m-r-sm m-b-sm">
+                <figure class="image is-48x48 center avatar m-r-sm m-b-sm">
                   <!-- <img
                     src="https://png.pngtree.com/png-clipart/20190516/original/pngtree-users-vector-icon-png-image_3725294.jpg"
                   /> -->
@@ -42,14 +44,13 @@
                     class="is-rounded has-background-grey"
                     :src="user.avatar"
                     alt="user-image"
-
                   />
                 </figure>
                 <div
                   class="m-r-sm navbar-item "
-                  style="width: max-content;border:none"
+                  style="border:none"
                 >
-                  <p class="subtitle is-size-6 has-text-grey">
+                  <p class="subtitle is-size-6 has-text-grey user-name">
                     Welcome {{ user.username }}!
                   </p>
                 </div>
@@ -90,7 +91,7 @@
               id="sb-link"
             >
               <span class="icon has-text-grey">
-                <i class="fas fa-bars"></i>
+                <font-awesome-icon :icon="['fas', 'bars']"></font-awesome-icon>
               </span>
             </div>
           </div>
@@ -137,9 +138,9 @@ $login: #ffdd57;
 .text {
   border: none;
 }
-.image {
-  width: 48px;
-}
+// .image {
+//   width: 48px;
+// }
 .side-nav {
   flex-wrap: nowrap;
 }
@@ -245,7 +246,15 @@ $login: #ffdd57;
   padding: 1rem;
   cursor: pointer;
 }
-
+.user-name {
+  word-break: keep-all;
+  width: min-content;
+}
+@media (min-width: 1251px) {
+.user-name {
+  width: max-content;
+}
+}
 @media (max-width: 1060px) {
   .desktop {
     display: none;

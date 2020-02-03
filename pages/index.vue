@@ -23,7 +23,12 @@ import Articles from "~/components/Articles/Articles";
 export default {
   components: { Hero, Courses, Articles },
   async fetch({ store }) {
-    await store.dispatch("product/FETCH_COURSES");
+    if (!store.getters["product/isLoaded"]) {
+      await store.dispatch("product/FETCH_COURSES");
+    }
+    if (store.getters["category/isEmpty"]) {
+      await store.dispatch("category/FETCH_CATEGORIES");
+    }
   }
 };
 </script>

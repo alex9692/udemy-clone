@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <Header @show-sidebar="toggleSidebar" :show="showSidebar"></Header>
+  <div class="grid-d">
+    <header class="grid-d-hd">
+      <Header @show-sidebar="toggleSidebar" :show="showSidebar"></Header>
+    </header>
     <Sidebar @close-sidebar="showSidebar = false" :show="showSidebar"></Sidebar>
-    <main @click="showSidebar = false" class="main-content">
+    <main @click="showSidebar = false" class="grid-d-m">
       <nuxt />
     </main>
-    <Footer></Footer>
+    <footer class="grid-d-ft">
+      <Footer></Footer>
+    </footer>
   </div>
 </template>
 
@@ -51,9 +55,6 @@ export default {
 </script>
 
 <style>
-.main-content {
-  margin-top: 5rem;
-}
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -65,40 +66,29 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+body {
   margin: 0;
+  padding: 0;
 }
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.grid-d {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows:
+    [header-start] 5rem [header-end main-start] 1fr
+    [main-end footer-start] minmax(min-content,max-content) [footer-end];
 }
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+.grid-d-hd {
+  grid-row: header;
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+.grid-d-m {
+  grid-row: main;
 }
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.grid-d-ft {
+  grid-row: footer;
 }
 </style>

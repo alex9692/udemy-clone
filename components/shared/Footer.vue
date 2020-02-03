@@ -25,7 +25,10 @@
             <ul class="is-size-7">
               <nuxt-link to="" tag="li">
                 <span class="icon has-text-black"
-                  ><i class="fab fa-2x fa-github-alt"></i
+                  ><font-awesome-icon
+                    :icon="['fab', 'github-alt']"
+                    size="2x"
+                  ></font-awesome-icon
                 ></span>
                 <p
                   class="m-b-none m-l-md has-text-black has-text-weight-semibold"
@@ -35,7 +38,10 @@
               </nuxt-link>
               <nuxt-link to="" tag="li">
                 <span class="icon has-text-link"
-                  ><i class="fab fa-2x fa-facebook-square"></i
+                  ><font-awesome-icon
+                    :icon="['fab', 'facebook-square']"
+                    size="2x"
+                  ></font-awesome-icon
                 ></span>
                 <p
                   class="m-b-none m-l-md has-text-link has-text-weight-semibold"
@@ -45,7 +51,10 @@
               </nuxt-link>
               <nuxt-link to="" tag="li">
                 <span class="icon has-text-white"
-                  ><i class="fab fa-2x fa-twitter-square"></i
+                  ><font-awesome-icon
+                    :icon="['fab', 'twitter-square']"
+                    size="2x"
+                  ></font-awesome-icon
                 ></span>
                 <p
                   class="m-b-none m-l-md has-text-white has-text-weight-semibold"

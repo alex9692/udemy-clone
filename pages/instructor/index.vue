@@ -1,65 +1,53 @@
 <template>
-  <section class="hero is-large">
-    <div class="hero-body">
+  <section class="hero is-medium" style="height:100%">
+    <div class="hero-body center">
       <div class="container">
-        <div class="columns is-centered">
-          <div class="column center">
-            <div class="box">
-              Courses
-            </div>
+        <div class="columns is-centered is-variable is-2">
+          <div class="column">
+            <nuxt-link
+              to="/instructor/courses"
+              class="has-text-grey-dark is-size-1"
+            >
+              <div class="box">Courses</div>
+            </nuxt-link>
           </div>
-          <div class="column center">
-            <div class="box">Blogs</div>
+          <div class="column">
+            <nuxt-link to="" class="has-text-grey-dark is-size-1">
+              <div class="box">Blogs</div></nuxt-link
+            >
           </div>
-          <div class="column center">
-            <div class="box">Heroes</div>
+          <div class="column">
+            <nuxt-link to="" class="has-text-grey-dark is-size-1">
+              <div class="box">Heroes</div></nuxt-link
+            >
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- <div class="instructor-page">
-    <div class="centered">
-      <div class="columns">
-        <div class="box" @click="() => {}">
-          <div>
-            Courses
-          </div>
-        </div>
-        <div class="box" @click="() => {}">
-          <div>
-            Blogs
-          </div>
-        </div>
-        <div class="box" @click="() => {}">
-          <div>
-            Heroes
-          </div>
-        </div>
-      </div>
-    </div>-
-  </div> -->
 </template>
 <script>
 export default {
-  middleware: ["isAuthenticated", "isAdmin"]
+  layout: "instructor"
 };
 </script>
 <style scoped lang="scss">
 .box {
   height: 300px;
-  width: 300px;
   display: flex;
-  margin: 5px;
   justify-content: center;
   align-items: center;
-  font-size: 50px;
   font-weight: bold;
   &:hover {
     cursor: pointer;
     background-color: #58529f;
-    color: white;
+    color: #fff !important;
     transition: background-color 0.3s ease-out;
   }
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

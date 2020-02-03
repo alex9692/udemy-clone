@@ -8,6 +8,7 @@ exports.getAllProducts = async (req, res, next) => {
     let filter = { status: "published" };
     let select = "-_id -products -email -role";
     if (req.params.userId) {
+      Reflect.deleteProperty(filter, 'status');
       filter = { ...filter, user: req.params.userId };
       select = "";
     }

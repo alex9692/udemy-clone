@@ -14,10 +14,9 @@
               </figure>
               <form @submit.prevent="onSubmit">
                 <div class="field">
-                  <div class="control">
+                  <div class="control has-icons-left">
                     <input
                       :class="{ 'is-danger': $v.email.$error }"
-                      ref="focusEmail"
                       class="input is-large"
                       type="email"
                       placeholder="Your Email"
@@ -26,7 +25,12 @@
                       v-model="email"
                       @blur="$v.email.$touch()"
                     />
-                    <div v-if="$v.email.$error" class="form-error">
+                    <span class="icon is-small is-left">
+                      <font-awesome-icon
+                        :icon="['fas', 'envelope']"
+                      ></font-awesome-icon>
+                    </span>
+                    <div v-if="$v.email.$dirty" class="form-error">
                       <span v-if="!$v.email.required" class="help is-danger"
                         >Email is required</span
                       >
@@ -37,7 +41,7 @@
                   </div>
                 </div>
                 <div class="field">
-                  <div class="control">
+                  <div class="control has-icons-left">
                     <input
                       :class="{ 'is-danger': $v.password.$error }"
                       class="input is-large"
@@ -47,6 +51,11 @@
                       v-model="password"
                       @blur="$v.password.$touch()"
                     />
+                    <span class="icon is-small is-left">
+                      <font-awesome-icon
+                        :icon="['fas', 'key']"
+                      ></font-awesome-icon>
+                    </span>
                     <div v-if="$v.password.$error" class="form-error">
                       <span v-if="!$v.password.required" class="help is-danger"
                         >Password is required</span
@@ -90,7 +99,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.focusEmail.focus();
+    // this.$refs.focusEmail.focus();
   },
   validations: {
     email: {
