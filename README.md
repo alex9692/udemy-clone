@@ -24,9 +24,15 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 ## ENV
 $ Please add your own configuration keys to env file before starting the dev server
 > BASE_URL
+
 > DBURI_DEVELOPMENT
+
 > JWT_SECRET
+
 > JWT_EXPIRES_IN(in secs)
+
 > DBURI_PRODUCTION
+
 > DBURI_PRODUCTION_PASSWORD
+
 > COOKIE_EXPIRES_IN(in hrs)
