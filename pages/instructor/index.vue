@@ -12,7 +12,10 @@
             </nuxt-link>
           </div>
           <div class="column">
-            <nuxt-link to="" class="has-text-grey-dark is-size-1">
+            <nuxt-link
+              to="/instructor/blogs"
+              class="has-text-grey-dark is-size-1"
+            >
               <div class="box">Blogs</div></nuxt-link
             >
           </div>

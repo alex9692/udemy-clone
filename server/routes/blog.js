@@ -4,11 +4,13 @@ const router = express.Router();
 
 const acl = require("../utils/nacl");
 const blogCtrl = require("../controllers/blog");
+const userCtrl = require("../controllers/user");
 
 router
   .route("/")
   .get(blogCtrl.getAllBlogs)
   .post(
+    userCtrl.isLoggedIn,
     passport.authenticate("jwt", { session: false }),
     acl.authorize,
     blogCtrl.setUserId,
@@ -28,6 +30,7 @@ router
   .route("/:id")
   .get(blogCtrl.getBlogById)
   .patch(
+    userCtrl.isLoggedIn,
     passport.authenticate("jwt", { session: false }),
     acl.authorize,
     blogCtrl.checkOwnedBlog,

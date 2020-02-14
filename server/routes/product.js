@@ -30,6 +30,7 @@ router
   .route("/:id")
   .get(productCtrl.getProductById)
   .patch(
+    userCtrl.isLoggedIn,
     passport.authenticate("jwt", { session: false }),
     acl.authorize,
     productCtrl.checkOwnProduct,

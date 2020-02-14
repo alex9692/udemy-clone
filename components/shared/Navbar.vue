@@ -21,7 +21,7 @@
             <nuxt-link to="#" class="navbar-item">
               Courses
             </nuxt-link>
-            <nuxt-link to="#" class="navbar-item">
+            <nuxt-link to="/blogs" class="navbar-item">
               Blogs
             </nuxt-link>
             <nuxt-link to="#" class="navbar-item">

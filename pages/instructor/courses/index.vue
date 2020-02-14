@@ -22,9 +22,9 @@ export default {
     Courses
   },
   async fetch({ store }) {
-    if (!store.getters["instructor/product/isLoaded"]) {
-      await store.dispatch("instructor/product/FETCH_COURSES");
-    }
+    // if (!store.getters["instructor/product/isLoaded"]) {
+    await store.dispatch("instructor/product/FETCH_COURSES");
+    // }
   },
   mounted() {
     this.$store.dispatch("inInstructorCoursePage", true);

@@ -125,8 +125,8 @@ exports.getMe = async (req, res, next) => {
 };
 
 exports.isLoggedIn = (req, res, next) => {
-  if (req && req.headers.cookie) {
-    req.user_cookies = req.headers.cookie.split("=")[1];
+  if (req.cookies) {
+    req.user_cookies = req.cookies.jwt;
     next();
   } else {
     res.send();

@@ -1,7 +1,10 @@
 <template>
   <div class="tile is-ancestor">
     <div class="tile is-parent is-12">
-      <nuxt-link to="#" class="tile overlay-container is-child box">
+      <nuxt-link
+        :to="`/instructor/courses/manage/${id}`"
+        class="tile overlay-container is-child box"
+      >
         <div class="columns">
           <div class="is-overlay overlay-child">
             <p class="overlay-text title is-3 has-text-weight-bold">
@@ -77,6 +80,10 @@ export default {
     price: {
       type: Number,
       required: false
+    },
+    id: {
+      type: String,
+      required: true
     }
   }
 };

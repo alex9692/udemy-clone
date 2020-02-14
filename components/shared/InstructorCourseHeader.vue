@@ -15,14 +15,16 @@
       </div>
     </div>
     <slot name="slot"></slot>
-    <div v-if="exitLink" class="header-group-buttons">
-      <nuxt-link
-        :to="exitLink"
-        class="button is-danger is-medium is-inverted is-outlined"
-      >
-        Exit
-      </nuxt-link>
-    </div>
+    <client-only>
+      <div v-if="exitLink" class="header-group-buttons">
+        <nuxt-link
+          :to="exitLink"
+          class="button is-danger is-medium is-inverted is-outlined"
+        >
+          Exit
+        </nuxt-link>
+      </div>
+    </client-only>
   </nav>
 </template>
 <script>

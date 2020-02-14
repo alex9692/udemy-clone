@@ -16,6 +16,51 @@
             Student
           </nuxt-link>
         </div>
+        <div
+          v-else-if="instructorMode === 'manage'"
+          class="header-group-buttons"
+        >
+          <button
+            :disabled="!allowUpdate"
+            @click="updateCourse"
+            class="button is-primary is-inverted is-medium is-outlined"
+          >
+            Save
+          </button>
+        </div>
+        <div
+          v-else-if="instructorMode === 'editing'"
+          class="header-group-buttons"
+        >
+          <Modal
+            openTitle="Publish"
+            openBtnClass="button is-success is-medium is-inverted is-outlined"
+            title="Review Details"
+          >
+            <template #blog-publish>
+              <div class="container">
+                <div class="title">
+                  Once you publish blog you cannot change url to a blog.
+                </div>
+                <!-- Check for error -->
+                <section>
+                  <div class="subtitle">Current Url is:</div>
+                  <article class="message is-success">
+                    <div class="message-body">
+                      <!-- Get here actual slug -->
+                      <strong>some-slug</strong>
+                    </div>
+                  </article>
+                </section>
+                <!-- <article class="message is-danger">
+                <div class="message-body">
+                  Display error here
+                </div>
+              </article> -->
+              </div>
+            </template>
+          </Modal>
+        </div>
       </template>
     </Header>
     <main class="grid-m-i">
@@ -29,19 +74,23 @@
 
 <script>
 import Header from "~/components/shared/InstructorCourseHeader";
-import { mapState } from "vuex";
+import Modal from "~/components/shared/Modal";
+import { mapState, mapGetters } from "vuex";
 import Footer from "~/components/shared/InstructorCourseCreateFooter";
 export default {
   middleware: ["isAuthenticated", "isAdmin"],
   components: {
     Header,
-    Footer
+    Footer,
+    Modal
   },
   computed: {
     ...mapState({
       instructorMode: state => state.instructorMode,
-
       page: state => state.instructor.createCourse.page
+    }),
+    ...mapGetters({
+      allowUpdate: "instructor/manageCourse/allowUpdate"
     }),
     title() {
       if (this.instructorMode === "course") {
@@ -54,6 +103,15 @@ export default {
         } else {
           return "Step 2 of 2";
         }
+      } else if (this.instructorMode === "manage") {
+        return "Some very nice course name";
+      } else if (this.instructorMode === "manageBlogs") {
+        return "Manage your Blogs";
+      } else if (
+        this.instructorMode === "editor" ||
+        this.instructorMode === "editing"
+      ) {
+        return "Write your Blogs";
       }
       return "";
     },
@@ -62,9 +120,23 @@ export default {
         return "/";
       } else if (this.instructorMode === "create") {
         return "/instructor/courses";
+      } else if (this.instructorMode === "manage") {
+        return "/instructor/courses";
+      } else if (this.instructorMode === "manageBlogs") {
+        return "/instructor";
+      } else if (
+        this.instructorMode === "editor" ||
+        this.instructorMode === "editing"
+      ) {
+        return "/instructor/blogs";
       } else {
         return null;
       }
+    }
+  },
+  methods: {
+    updateCourse() {
+      this.$store.dispatch("instructor/manageCourse/UPDATE_COURSE");
     }
   }
 };

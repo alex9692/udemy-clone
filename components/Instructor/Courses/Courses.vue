@@ -8,6 +8,7 @@
       :status="course.status"
       :price="course.price"
       :image="course.image"
+      :id="course._id"
     ></Course>
   </div>
 </template>
