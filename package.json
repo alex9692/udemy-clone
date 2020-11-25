@@ -30,7 +30,7 @@
     "express": "^4.16.4",
     "express-acl": "^2.0.8",
     "express-session": "^1.17.0",
-    "highlight.js": "^9.18.0",
+    "highlight.js": "^10.1.2",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.8.9",
